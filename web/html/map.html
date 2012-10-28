@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <title>Game</title>
+        <link rel="stylesheet" href="../css/normalize.css">
+        <link rel="stylesheet" href="../css/map.css">
+    </head>
+    <body>
+    
+    <h1>Map</h1>
+
+        <script src="../js/curl.js" type="text/javascript"></script>
+        <script>
+            curl(
+	            {
+    	            baseUrl: '../js',
+        	        paths: {
+            	        'jquery': 'jquery-1.8.2.min'
+                	}
+            	},
+            	['map'], 
+            	function(map) { map.init(); } 
+            );
+        </script>
+
+    </body>
+</html>

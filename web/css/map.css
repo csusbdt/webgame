@@ -1,0 +1,17 @@
+
+.table {
+	display: table;
+	border: solid 1px;
+}
+
+.cell {
+	display: table-cell;
+	border-right: dashed 1px;
+	border-bottom: solid 1px;
+	width: 64px;
+	height: 64px;
+}
+
+.row {
+	display: table-row;
+}
