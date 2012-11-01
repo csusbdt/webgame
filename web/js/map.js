@@ -1,41 +1,43 @@
-define(['jquery'], function ($) {
-	var map = { };
-	map.init = function() {
-		$(document).ready(function() {
-			var numCols = 5;
-			var numRows = 10;
+define(['jquery'], function($) {
+	var npcUpdateFunctions = $.Callbacks();
 
-			var $container = $('<div></div>');
-			$('body').append($container);
-			
-			var $table = $('<div></div>');
-			$table.addClass('table');
-			$container.append($table);
-
-			for (j = 0; j < numRows; ++j) {
-				var $row = $('<div></div>');
-				$row.addClass('row');
-				$table.append($row);
-				for (var i = 0; i < numCols; ++i) {
-					var $cell = $('<div></div>');
-					$cell.html('me');
-					$cell.addClass('cell');
-					$row.append($cell);
-				}
+	var map = {
+		'init': function() {
+			$('.npc').each(function() {
+				var npcName = $(this).attr('id');
+				curl(['npcs/' + npcName], function(npc) {
+					npcUpdateFunctions.add(npc.update);
+				});
+			});
+		},
+		'pc': {
+			'moveUp': function() {
+				var cell = $('#pc').parent();
+				var row = cell.parent();
+				var rowPos = row.prevAll().length;
+				if (rowPos === 0) return;
+				var colPos = cell.prevAll().length;
+				var destRow = row.prev();
+				var destCell = destRow.children().eq(colPos);
+				$('#pc').appendTo(destCell);
 			}
-			
-			$container.append(
-				$('<div></div>').html('EXIT').click(function() {
-					$container.fadeOut(500, function() {
-						window.location = 'select.html';
-					})
-				})
-			);
+		}
+	}
+		
+	$('html').keypress(function(e) {
+		if (e.which === 119) {        // 'w'
+			map.pc.moveUp();
+		} else if (e.which === 115) { // 's'
+			alert('s');
+		} else if (e.which === 97) {  // 'a'
+			alert('a');
+		} else if (e.which === 100) { // 'd'
+			alert('d');
+		} else if (e.which === 32) {  // space 
+			alert('space');
+		}
+		npcUpdateFunctions.fire();
+	});
 
-			$container.hide();
-			$container.fadeIn(2000);
-		});
-
-	};
 	return map;
 });

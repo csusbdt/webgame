@@ -2,153 +2,63 @@
     <head>
         <meta charset="utf-8">
         <title>Test Map</title>
-        <style>
-        	// See http://css-tricks.com/css-transparency-settings-for-all-broswers/
-        	.transparent {
-				zoom: 1;
-				filter: alpha(opacity=50);
-				opacity: 0.5;
-			}
-			
-        	table {
-				display: table;
-				border: solid 1px;
-				border-collapse: collapse;
-    			border-spacing: 0;
-    			position: relative;
-			}
-
-			tr {
-				display: table-row;
-    			position: relative;
-			}
-
-			td {
-				display: table-cell;
-				border-right: dashed 1px;
-				border-bottom: solid 1px;
-				width: 64px;
-				height: 64px;
-    			position: relative;
-			}
-			
-			#pc {
-				width: 32px;
-				height: 32px;
-				margin: 16px;
-    			position: absolute;
-    			position: absolute;
-    			top: 0;
-    			bottom: 0;
-    			z-index: 20;
-			}
-						
-			#fred {
-				width: 32px;
-				height: 32px;
-				margin: 16px;
-    			position: absolute;
-    			top: 0;
-    			bottom: 0;
-    			z-index: 10;
-			}
-        </style>
+        <link rel="stylesheet" href="../css/map.css">
     </head>
     <body>
-    
-    <h1>Test Map</h1>
-    
-    <h2>Overview</h2>
         
-    <p>
-    This page shows how a map can be defined directly in HTML. 
-    Under this organization scheme, each map is defined
-    directly in its own HTML file.
-    </p>
-    
-    <p>
-    The page illustrates how movement in a table-based grid can be accomplished,
-    and it shows a possible way to initiate interactions with NPCs and
-    other triggers built into the grid.
-    </p>
-        
-    <p>
-    This page responds to key press of awsd.  Pressing 'w' makes the pc 
-    move up in the grid.  The other key presses need to be completed.
-    </p>
-    
-    <p>
-    For documentation of the jQuery functions used to solve this
-    problem, see <a href="http://api.jquery.com/category/Traversing/">Traversing</a>.
-    </p>
-    
-    <h1>Example Map</h1>
-    
     <table>
     	<tr>
     		<td></td>
     		<td></td>
     		<td></td>
-    	</tr>
-    	<tr>
-    		<td></td>
-    		<td><img id="fred" src="../images/fred.png"/></td>
     		<td></td>
     	</tr>
     	<tr>
     		<td></td>
+    		<td><img id="mary" src="../images/fred.png" class="npc"/></td>
     		<td></td>
     		<td></td>
     	</tr>
     	<tr>
     		<td></td>
-    		<td><img id="pc" src="../images/pc.png"/></td>
+    		<td></td>
+    		<td></td>
+    		<td></td>
+    	</tr>
+    	<tr>
+    		<td></td>
+    		<td><img id="fred" src="../images/fred.png" class="npc"/></td>
+    		<td></td>
+    		<td></td>
+    	</tr>
+    	<tr>
+    		<td></td>
+    		<td></td>
+    		<td></td>
+    		<td></td>
+    	</tr>
+    	<tr>
+    		<td></td>
+    		<td><img id="pc" src="../images/pc.png" class="pc"/></td>
+    		<td></td>
     		<td></td>
     	</tr>
     </table>
 
-
-        <script src="../js/jquery-1.8.2.min.js" type="text/javascript"></script>
-        <script>
-        jQuery(function($) {
-        
-        	// Create NPC fred.
-        	var $fred = $('#fred');
-        	$fred.update = function() {
-        		if ($fred.siblings('#pc').length > 0) {
-        			alert('fred speaks');
-        		}
-        	}
-        	
-        	// Create the PC.
-			var $pc = $('#pc');
-			$pc.moveUp = function() {
-				var cell = $pc.parent();
-				var row = cell.parent();
-				var rowPos = row.prevAll().length;
-				if (rowPos === 0) return;
-				var colPos = cell.prevAll().length;
-				var destRow = row.prev();
-				var destCell = destRow.children().eq(colPos);
-				$pc.appendTo(destCell);
-			}
-
-			// Set up user input processing.			
-			$('html').keypress(function(e) {
-				if (e.which === 119) { // 'w'
-					$pc.moveUp();
-				} else if (e.which === 115) { // 's'
-					alert('s');
-				} else if (e.which === 97) { // 'a'
-					alert('a');
-				} else if (e.which === 100) { // 'd'
-					alert('d');
-				} else if (e.which === 32) { // space 
-					alert('space');
+	<script src="../js/curl.js" type="text/javascript"></script>
+	<script>
+		curl(
+			{
+				baseUrl: '../js',
+				paths: {
+					'jquery': 'jquery-1.8.2.min'
 				}
-				$fred.update();
-			});
-		});
+			},
+			['map'], 
+			function(map) {
+				map.init();
+			} 
+		);
         </script>
         
     </body>

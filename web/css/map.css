@@ -1,17 +1,38 @@
-
-.table {
-	display: table;
-	border: solid 1px;
+// See http://css-tricks.com/css-transparency-settings-for-all-broswers/
+.transparent {
+	zoom: 1;
+	filter: alpha(opacity=50);
+	opacity: 0.5;
 }
 
-.cell {
+table {
+	display: table;
+	border: solid 1px;
+	border-collapse: collapse;
+	border-spacing: 0;
+	position: relative;
+}
+
+tr {
+	display: table-row;
+	position: relative;
+}
+
+td {
 	display: table-cell;
 	border-right: dashed 1px;
 	border-bottom: solid 1px;
 	width: 64px;
 	height: 64px;
+	position: relative;
 }
-
-.row {
-	display: table-row;
+						
+.npc, .pc {
+	width: 32px;
+	height: 32px;
+	margin: 16px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	z-index: 10;
 }
