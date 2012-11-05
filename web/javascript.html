@@ -1,0 +1,47 @@
+<script>
+
+function assert(text, e) {
+	if (!e) {
+		console.log(text + ' failed.');
+	}
+}
+
+var i = 0;
+
+assert(++i, typeof Function === 'function');
+assert(++i, typeof Object === 'function');
+
+assert(++i, Function.prototype !== undefined);
+assert(++i, Object.prototype !== undefined);
+assert(++i, Function.prototype !== Object.prototype);
+
+assert(++i, Object.keys(Function.prototype).length === 0);
+assert(++i, Object.keys(Object.prototype).length === 0);
+
+var obj = new Object();
+assert(++i, obj.prototype === undefined);
+assert(++i, Object.getPrototypeOf(obj) === Object.prototype);
+
+function Constructor() { };
+assert(++i, Object.getPrototypeOf(Constructor) === Function.prototype);
+assert(++i, Constructor.prototype !== Function.prototype);
+assert(++i, Constructor.prototype !== undefined);
+assert(++i, Object.keys(Constructor.prototype).length === 0);
+
+obj = new Constructor();
+assert(++i, Object.getPrototypeOf(obj) === Constructor.prototype);
+assert(++i, obj.prototype === undefined);
+
+function Constructor2() { };
+assert(++i, Object.getPrototypeOf(Constructor) === Object.getPrototypeOf(Constructor2));
+assert(++i, Constructor.prototype !== Constructor2.prototype);
+
+var obj2 = new Constructor2();
+assert(++i, Object.getPrototypeOf(obj2) === Constructor2.prototype);
+
+assert(++i, Object.getPrototypeOf(Object) === Function.prototype);
+
+
+console.log('OK');
+
+</script>
