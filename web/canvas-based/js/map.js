@@ -39,7 +39,7 @@ define([], function() {
 			drawFunctions.push(drawGrid);
 		},
 		'addNPC': function(npc, col, row) {
-			updateFunctions.push(npc.update);
+			npcs.push(npc);
 			npc.col = col;
 			npc.row = row;
 			var image = new Image();
@@ -62,8 +62,20 @@ define([], function() {
 			pc.col = col;
 			pc.row = row;
 			pc.moveUp = function() {
-				if (this.row > 0) --this.row;
-				redraw();
+				if (this.row === 0) return;
+				var blocked = false;
+				npcs.forEach(
+					function(npc) {
+						if (npc.col === pc.col && npc.row === pc.row - 1) {
+							npc.interact();
+							blocked = true;
+						}
+					}
+				);
+				if (!blocked) {
+					--this.row;
+					redraw();
+				}
 			}
 			var image = new Image();
 			image.onload = function() {
@@ -94,9 +106,6 @@ define([], function() {
 		} else if (e.which === 32) {  // space 
 			alert('space');
 		}
-		updateFunctions.forEach(function(update) {
-			update(map);
-		});
 	}
 	return map;
 });
