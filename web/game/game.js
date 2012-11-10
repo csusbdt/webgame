@@ -1,5 +1,7 @@
 (function() {
 
+	var SHOW_GRID = true;
+
 	//////////////////////////////////////////////////////////////////////////////
 	// Create a global game object.
 	//////////////////////////////////////////////////////////////////////////////
@@ -45,8 +47,12 @@
 		for (var draw in game.drawFunctions) {
 			delete game.drawFunctions.draw;
 		}
-		game.runScript('maps/' + mapName + '.js', completionCallback);
-		game.mapName = mapName;	
+		game.runScript('maps/' + mapName + '.js', function() {
+			game.mapName = mapName;
+			if (SHOW_GRID) game.drawFunctions.drawGrid = game.drawGrid;
+			if (completionCallback) completionCallback();
+			game.redraw();
+		});
 	};
 	
 	game.exit = function() {
@@ -86,10 +92,7 @@
 		var mapName = game.getURLParameter('map');
 		if (mapName === null) mapName = localStorage.getItem('mapName');
 		if (mapName === null) mapName = 'home';
-		game.loadMap(mapName, function() {
-			game.drawFunctions.drawGrid = game.drawGrid;
-			game.redraw();
-		});
+		game.loadMap(mapName, function() { });
 	})();
 
 })();
