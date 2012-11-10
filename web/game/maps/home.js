@@ -1,7 +1,10 @@
 (function() {
-	game.ctx.font = "bold 12px sans-serif";
-	game.ctx.fillText("welcome home.", 50, 50);
-	
+	function drawTitle() {
+		game.ctx.font = "bold 12px sans-serif";
+		game.ctx.fillText("welcome home.", 50, 50);
+	};
+	game.drawFunctions.drawTitle = drawTitle;
+	game.setGrid(64, 4, 6);
 	document.getElementsByTagName('html')[0].onkeyup = function(e) {
 		if (e.which === 87) {         // 'w'
 		} else if (e.which === 83) {  // 's'
