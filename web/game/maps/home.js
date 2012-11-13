@@ -1,21 +1,44 @@
 (function() {
 
-	game.setGrid(64, 4, 6);
+	game.setGrid(64, 44, 86);
 	
 	var title = {
+		'text': "welcome home.",
 		'draw': function() {
 			game.ctx.font = "bold 12px sans-serif";
-			game.ctx.fillText("welcome home.", 50, 50);
+			game.ctx.fillText(this.text, 50, 50);
 		}
 	};
 
 	game.addDrawable(0, title, 2000);
 	
+	var nullController = function(e) { };
+	
 	var controller = function(e) {
-		if (e.which === 32) game.loadMap('forest');	
-	}
+		var pc = game.npcs['pepper'];
+		if (e.which === 87) {         // 'w'
+			if (pc.canMoveUp()) {
+				game.controllerStack.push(nullController);
+				pc.moveUp(function() {
+					game.controllerStack.pop();
+				});
+			}
+		} else if (e.which === 83) {  // 's'
+		} else if (e.which === 65) {  // 'a'
+		} else if (e.which === 68) {  // 'd'
+		} else if (e.which === 32) {  // space
+			game.loadMap('forest')
+		}
+	};
+	
+	var staticPepper = new NPC(2, 2);
+	game.npcs['staticPepper'] = staticPepper;
+	staticPepper.setImage(0, 'pepper.png', function() {
+		requestAnimationFrame(game.redraw);
+	});
+	staticPepper.blocking = true;
 
-	game.loadNpc('pepper', 2, 3, function() {
+	game.loadNpc('pepper', 2, 5, function() {
 		game.controllerStack.push(controller);
 		game.redraw();
 	});

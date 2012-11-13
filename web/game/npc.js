@@ -1,13 +1,19 @@
 function NPC(col, row) {
 	this.col = col;
 	this.row = row;
+	this.x = col * game.cellSize;
+	this.y = row * game.cellSize;
+	game.grid[col][row].push(this);
 }
+
+NPC.moveSpeed = 0.1;   // pixels per millisecond
+NPC.snapDistance = 5;  // pixels
 
 NPC.prototype.draw = function() {
 	game.ctx.drawImage(
 		this.image,
-		this.col * game.cellSize + (game.cellSize - this.image.width) / 2, 
-		this.row * game.cellSize + (game.cellSize - this.image.height) / 2
+		this.x + (game.cellSize - this.image.width) / 2, 
+		this.y + (game.cellSize - this.image.height) / 2
 	);
 };
 
@@ -35,6 +41,36 @@ NPC.prototype.setImage = function(layerIndex, imageFile, completionCallback) {
 		};
 		this.image.src = 'images/' + imageFile;
 	}
+};
+
+NPC.prototype.canMoveUp = function() {
+	if (this.row <= 0) return false;
+	var cellOccupants = game.grid[this.col][this.row - 1];
+	for (var i = 0; i < cellOccupants.length; ++i) {
+		if (cellOccupants[i].blocking) return false;
+	}
+	return true;
+};
+
+NPC.prototype.moveUp = function(completionCallback) {
+	var npc = this;
+	var destY = this.y - game.cellSize;
+	var previousTime = new Date().getTime();
+	var currentTime = previousTime;
+	function loop() {
+		currentTime = new Date().getTime();
+		npc.y -= NPC.moveSpeed * (currentTime - previousTime);
+		previousTime = currentTime;
+		if (npc.y <= destY + NPC.snapDistance) {
+			npc.y = destY;
+			--npc.row;
+			if (completionCallback) completionCallback();
+		} else {
+			requestAnimationFrame(loop);
+		}
+		game.redraw();
+	};
+	requestAnimationFrame(loop);
 };
 
 // NPC.prototype.drawDialog = function(dialog) {

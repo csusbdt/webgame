@@ -1,4 +1,4 @@
-(function(window) {
+(function() {
 
 	var SHOW_GRID = true;
 
@@ -22,6 +22,14 @@
 		game.cols = cols;
 		game.rows = rows;
 		game.resizeCanvas(cellSize * cols, cellSize * rows);
+		game.grid = [ ];
+		for (var x = 0; x < cols; ++x) {
+			var row = [ ];
+			for (var y = 0; y < rows; ++y) {
+				row.push([]);
+			}
+			game.grid.push(row);
+		}
 	};
 
 	var drawableLayers = [ ];
@@ -69,25 +77,9 @@
 	game.clearCanvas = function() {
 		game.ctx.clearRect(0, 0, game.width, game.height);
 	};
+		
+	// miscellaneous 
 	
-	var grid = {
-		'draw': function() {
-			var col = 0,
-				row = 0,
-				x = 0,
-				y = 0;
-			for (col = 0; col < game.cols; ++col) {
-				for (row = 0; row < game.rows; ++row) {
-					game.ctx.setTransform(1, 0, 0, 1, game.cellSize * col, game.cellSize * row);
-					game.ctx.strokeRect(0, 0, game.cellSize, game.cellSize);
-				}
-			}
-			game.ctx.setTransform(1, 0, 0, 1, 0, 0);
-		}
-	};
-	
-	// miscellaneous utilities
-
 	game.getURLParameter = function(name) {
 		var param = (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1];
 		return param === null ? null : decodeURI(param);
@@ -117,11 +109,12 @@
 		drawableLayers = [ ];
 		game.controllerStack = [ ];
 		game.npcs = { };
+		delete game.grid;
 		
 		// Run map creation script.
 		game.runScript('maps/' + mapName + '.js', function() {
-			if (SHOW_GRID) game.addDrawable(0, grid);
-			game.redraw();
+			if (GridLines) game.addDrawable(0, new GridLines());
+			requestAnimationFrame(game.redraw);
 		});
 	};
 
@@ -146,13 +139,6 @@
 	document.getElementsByTagName('html')[0].onkeyup = function(e) {
 		if (game.controllerStack.length === 0) return;
 		game.controllerStack[game.controllerStack.length - 1](e);
-// 		if (e.which === 87) {         // 'w'
-// 		} else if (e.which === 83) {  // 's'
-// 		} else if (e.which === 65) {  // 'a'
-// 		} else if (e.which === 68) {  // 'd'
-// 		} else if (e.which === 32) {  // space 
-// 			if (game.inputHandlers.space) game.inputHandlers.space();
-// 		}
 	};
 	
 	//////////////////////////////////////////////////////////////////////////////
@@ -166,4 +152,4 @@
 		game.loadMap(mapName, function() { });
 	})();
 
-})(window);
+})();
