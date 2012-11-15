@@ -1,6 +1,6 @@
 (function() {
 
-	game.setGrid(64, 44, 86);
+	game.setGrid(64, 14, 9);
 	
 	var title = {
 		'text': "welcome home.",

@@ -10,7 +10,7 @@
 
 ## To see a running instance of webgame:
 
-- [Webgame](http://csusbdt594.appspot.com/webgame/)
+- [Webgame](http://csusbdt594.appspot.com/)
 
 ## System design
 
