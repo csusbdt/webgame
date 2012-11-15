@@ -1,13 +1,13 @@
 (function() {
 
 	var title = {
-		'draw': function() {
-			game.ctx.font = "bold 12px sans-serif";
-			game.ctx.fillText("game over.", 50, 50);
+		'draw': function(ctx) {
+			ctx.font = "bold 12px sans-serif";
+			ctx.fillText("game over.", 50, 50);
 		}
 	};
 	
-	game.addDrawable(0, title);
+	view.addDrawable(0, title);
 
 	game.setGrid(64, 3, 3);	
 

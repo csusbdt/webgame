@@ -24,6 +24,6 @@ function GridLines(cellSize, cols, rows, colOffset, rowOffset) {
 	}		
 };
 
-GridLines.prototype.draw = function() {
-	game.ctx.drawImage(this.canvas, this.colOffset, this.rowOffset);
+GridLines.prototype.draw = function(ctx) {
+	ctx.drawImage(this.canvas, this.colOffset, this.rowOffset);
 };

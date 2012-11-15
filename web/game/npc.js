@@ -9,8 +9,8 @@ function NPC(col, row) {
 NPC.moveSpeed = 0.1;   // pixels per millisecond
 NPC.snapDistance = 5;  // pixels
 
-NPC.prototype.draw = function() {
-	game.ctx.drawImage(
+NPC.prototype.draw = function(ctx) {
+	ctx.drawImage(
 		this.image,
 		this.x + (game.cellSize - this.image.width) / 2, 
 		this.y + (game.cellSize - this.image.height) / 2
@@ -25,7 +25,7 @@ NPC.prototype.init = function(name, completionCallback) {
 
 NPC.prototype.setImage = function(layerIndex, imageFile, completionCallback) {
 	if (imageFile === null && typeof this.image !== undefined) {
-		game.removeDrawable(layerIndex, this);
+		view.removeDrawable(layerIndex, this);
 		delete this.image;
 		if (completionCallback) {
 			completionCallback();
@@ -34,7 +34,7 @@ NPC.prototype.setImage = function(layerIndex, imageFile, completionCallback) {
 		this.image = new Image();
 		var npc = this;
 		this.image.onload = function() {
-			game.addDrawable(layerIndex, npc);
+			view.addDrawable(layerIndex, npc);
 			if (completionCallback) {
 				completionCallback();
 			}
@@ -56,7 +56,7 @@ NPC.prototype.moveUp = function(completionCallback) {
 	var npc = this;
 	var destY = this.y - game.cellSize;
 	function loop() {
-		npc.y -= NPC.moveSpeed * game.averageFrameTime;
+		npc.y -= NPC.moveSpeed * view.dt;
 		if (npc.y <= destY + NPC.snapDistance) {
 			npc.y = destY;
 			--npc.row;
@@ -64,7 +64,6 @@ NPC.prototype.moveUp = function(completionCallback) {
 		} else {
 			requestAnimationFrame(loop);
 		}
-//		requestAnimationFrame(game.redraw);
 	};
 	requestAnimationFrame(loop);
 };
@@ -103,9 +102,3 @@ NPC.prototype.moveUp = function(completionCallback) {
 */	
 
 })();
-
-
-// (function() {
-// 
-// 	window.NPC
-// })();

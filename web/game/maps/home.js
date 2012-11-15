@@ -4,13 +4,13 @@
 	
 	var title = {
 		'text': "welcome home.",
-		'draw': function() {
-			game.ctx.font = "bold 12px sans-serif";
-			game.ctx.fillText(this.text, 50, 50);
+		'draw': function(ctx) {
+			ctx.font = "bold 12px sans-serif";
+			ctx.fillText(this.text, 50, 50);
 		}
 	};
 
-	game.addDrawable(0, title, 2000);
+	view.addDrawable(0, title, 2000);
 	
 	var nullController = function(e) { };
 	
