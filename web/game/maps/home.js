@@ -33,14 +33,11 @@
 	
 	var staticPepper = new NPC(2, 2);
 	game.npcs['staticPepper'] = staticPepper;
-	staticPepper.setImage(0, 'pepper.png', function() {
-		requestAnimationFrame(game.redraw);
-	});
+	staticPepper.setImage(0, 'pepper.png');
 	staticPepper.blocking = true;
 
 	game.loadNpc('pepper', 2, 5, function() {
 		game.controllerStack.push(controller);
-		game.redraw();
 	});
 
 })();

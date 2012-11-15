@@ -1,7 +1,5 @@
 (function() {
-
-	var SHOW_GRID = true;
-
+	
 	//////////////////////////////////////////////////////////////////////////////
 	// Create a global game object.
 	//////////////////////////////////////////////////////////////////////////////
@@ -33,6 +31,27 @@
 	};
 
 	var drawableLayers = [ ];
+	var WEIGHT = 0.03;
+	var currentTime = new Date().getTime();
+	var previousTime = currentTime;
+	game.averageFrameTime = 16;
+	
+	function animationLoop() {
+		currentTime = new Date().getTime();
+		var frameTime = currentTime - previousTime;
+		previousTime = currentTime;
+		game.averageFrameTime = game.averageFrameTime * (1 - WEIGHT) + frameTime * WEIGHT;
+		game.ctx.clearRect(0, 0, game.width, game.height);
+		for (var layerIndex = 0; layerIndex < drawableLayers.length; ++layerIndex) {
+			var layer = drawableLayers[layerIndex];
+			for (var i = 0; i < layer.length; ++i) {
+				layer[i].draw();
+			}
+		}
+		requestAnimationFrame(animationLoop);
+	};
+	requestAnimationFrame(animationLoop);
+
 
 	game.addDrawable = function(layerIndex, drawable, duration) {
 		if (typeof drawableLayers[layerIndex] === 'undefined') {
@@ -48,7 +67,6 @@
 		if (typeof duration !== 'undefined') {
 			setTimeout(function() {
 				game.removeDrawable(layerIndex, drawable);
-				game.redraw();
 			}, duration);
 		}
 	};
@@ -63,21 +81,7 @@
 			}
 		}
 	};
-			
-	game.redraw = function() {
-		game.ctx.clearRect(0, 0, game.width, game.height);
-		for (var layerIndex = 0; layerIndex < drawableLayers.length; ++layerIndex) {
-			var layer = drawableLayers[layerIndex];
-			for (var i = 0; i < layer.length; ++i) {
-				layer[i].draw();
-			}
-		}
-	};
-	
-	game.clearCanvas = function() {
-		game.ctx.clearRect(0, 0, game.width, game.height);
-	};
-		
+
 	// miscellaneous 
 	
 	game.getURLParameter = function(name) {
@@ -103,8 +107,7 @@
 	};
 
 	game.loadMap = function(mapName) {
-		game.clearCanvas();
-		
+	
 		// Clear existing map features.
 		drawableLayers = [ ];
 		game.controllerStack = [ ];
@@ -114,7 +117,6 @@
 		// Run map creation script.
 		game.runScript('maps/' + mapName + '.js', function() {
 			if (GridLines) game.addDrawable(0, new GridLines());
-			requestAnimationFrame(game.redraw);
 		});
 	};
 
@@ -140,6 +142,15 @@
 		if (game.controllerStack.length === 0) return;
 		game.controllerStack[game.controllerStack.length - 1](e);
 	};
+	
+	//////////////////////////////////////////////////////////////////////////////
+	// Average milliseconds per animation frame.
+	//
+	// Note: Javascript Date object does not give reliable time values, so we
+	//       maintain a moving average frame time.
+	//
+	//////////////////////////////////////////////////////////////////////////////
+
 	
 	//////////////////////////////////////////////////////////////////////////////
 	// Initialize game.

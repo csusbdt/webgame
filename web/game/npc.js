@@ -55,12 +55,8 @@ NPC.prototype.canMoveUp = function() {
 NPC.prototype.moveUp = function(completionCallback) {
 	var npc = this;
 	var destY = this.y - game.cellSize;
-	var previousTime = new Date().getTime();
-	var currentTime = previousTime;
 	function loop() {
-		currentTime = new Date().getTime();
-		npc.y -= NPC.moveSpeed * (currentTime - previousTime);
-		previousTime = currentTime;
+		npc.y -= NPC.moveSpeed * game.averageFrameTime;
 		if (npc.y <= destY + NPC.snapDistance) {
 			npc.y = destY;
 			--npc.row;
@@ -68,15 +64,10 @@ NPC.prototype.moveUp = function(completionCallback) {
 		} else {
 			requestAnimationFrame(loop);
 		}
-		game.redraw();
+//		requestAnimationFrame(game.redraw);
 	};
 	requestAnimationFrame(loop);
 };
-
-// NPC.prototype.drawDialog = function(dialog) {
-// 	game.ctx.font = "bold 12px sans-serif";
-// 	game.ctx.fillText(dialog, 50, 50);
-// };
 
 // universal greetings
 
