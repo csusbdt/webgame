@@ -7,7 +7,7 @@ function NPC(col, row) {
 }
 
 NPC.moveSpeed = 0.1;   // pixels per millisecond
-NPC.snapDistance = 5;  // pixels
+NPC.snapDistance = 2;  // pixels
 
 NPC.prototype.draw = function(ctx) {
 	ctx.drawImage(
@@ -52,6 +52,33 @@ NPC.prototype.canMoveUp = function() {
 	return true;
 };
 
+NPC.prototype.canMoveDown = function() {
+	if (this.row >= game.rows - 1) return false;
+	var cellOccupants = game.grid[this.col][this.row + 1];
+	for (var i = 0; i < cellOccupants.length; ++i) {
+		if (cellOccupants[i].blocking) return false;
+	}
+	return true;
+};
+
+NPC.prototype.canMoveLeft = function() {
+	if (this.col <= 0) return false;
+	var cellOccupants = game.grid[this.col - 1][this.row];
+	for (var i = 0; i < cellOccupants.length; ++i) {
+		if (cellOccupants[i].blocking) return false;
+	}
+	return true;
+};
+
+NPC.prototype.canMoveRight = function() {
+	if (this.col >= game.cols - 1) return false;
+	var cellOccupants = game.grid[this.col + 1][this.row];
+	for (var i = 0; i < cellOccupants.length; ++i) {
+		if (cellOccupants[i].blocking) return false;
+	}
+	return true;
+};
+
 NPC.prototype.moveUp = function(completionCallback) {
 	var npc = this;
 	var destY = this.y - game.cellSize;
@@ -60,6 +87,54 @@ NPC.prototype.moveUp = function(completionCallback) {
 		if (npc.y <= destY + NPC.snapDistance) {
 			npc.y = destY;
 			--npc.row;
+			if (completionCallback) completionCallback();
+		} else {
+			requestAnimationFrame(loop);
+		}
+	};
+	requestAnimationFrame(loop);
+};
+
+NPC.prototype.moveDown = function(completionCallback) {
+	var npc = this;
+	var destY = this.y + game.cellSize;
+	function loop() {
+		npc.y += NPC.moveSpeed * view.dt;
+		if (npc.y >= destY - NPC.snapDistance) {
+			npc.y = destY;
+			++npc.row;
+			if (completionCallback) completionCallback();
+		} else {
+			requestAnimationFrame(loop);
+		}
+	};
+	requestAnimationFrame(loop);
+};
+
+NPC.prototype.moveLeft = function(completionCallback) {
+	var npc = this;
+	var destX = this.x - game.cellSize;
+	function loop() {
+		npc.x -= NPC.moveSpeed * view.dt;
+		if (npc.x <= destX + NPC.snapDistance) {
+			npc.x = destX;
+			--npc.col;
+			if (completionCallback) completionCallback();
+		} else {
+			requestAnimationFrame(loop);
+		}
+	};
+	requestAnimationFrame(loop);
+};
+
+NPC.prototype.moveRight = function(completionCallback) {
+	var npc = this;
+	var destX = this.x + game.cellSize;
+	function loop() {
+		npc.x += NPC.moveSpeed * view.dt;
+		if (npc.x >= destX - NPC.snapDistance) {
+			npc.x = destX;
+			++npc.col;
 			if (completionCallback) completionCallback();
 		} else {
 			requestAnimationFrame(loop);

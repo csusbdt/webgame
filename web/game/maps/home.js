@@ -24,8 +24,26 @@
 				});
 			}
 		} else if (e.which === 83) {  // 's'
+			if (pc.canMoveDown()) {
+				game.controllerStack.push(nullController);
+				pc.moveDown(function() {
+					game.controllerStack.pop();
+				});
+			}
 		} else if (e.which === 65) {  // 'a'
+			if (pc.canMoveLeft()) {
+				game.controllerStack.push(nullController);
+				pc.moveLeft(function() {
+					game.controllerStack.pop();
+				});
+			}
 		} else if (e.which === 68) {  // 'd'
+			if (pc.canMoveRight()) {
+				game.controllerStack.push(nullController);
+				pc.moveRight(function() {
+					game.controllerStack.pop();
+				});
+			}
 		} else if (e.which === 32) {  // space
 			game.loadMap('forest')
 		}
