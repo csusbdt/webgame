@@ -3,7 +3,7 @@
 	view.resize(200, 200);
 	
 	view.addDrawable(0, {
-		draw: function(ctx) {
+		draw: function(dt, ctx) {
 			ctx.font = 'bold 12px sans-serif';
 			ctx.fillStyle = "#000000";
 			ctx.fillText('Thank you for playing.', 50, 50);

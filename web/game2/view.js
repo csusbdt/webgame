@@ -5,7 +5,8 @@
 		drawableLayers = [ ],
 		WEIGHT = 0.03,
 		currentTime = new Date().getTime(),
-		previousTime = currentTime;
+		previousTime = currentTime,
+		dt = 16;  // average milliseconds per frame
 
 	view = { 
 		width: null,
@@ -57,18 +58,16 @@
 	//
 	//////////////////////////////////////////////////////////////////////////////
 	
-	view.dt = 16;  // average milliseconds per frame
-	
 	function animationLoop() {
 		currentTime = new Date().getTime();
 		var elapsedTime = currentTime - previousTime;
 		previousTime = currentTime;
-		view.dt = view.dt * (1 - WEIGHT) + elapsedTime * WEIGHT;
+		dt = dt * (1 - WEIGHT) + elapsedTime * WEIGHT;
 		context.clearRect(0, 0, view.width, view.height);
 		for (var layerIndex = 0; layerIndex < drawableLayers.length; ++layerIndex) {
 			var layer = drawableLayers[layerIndex];
 			for (var i = 0; i < layer.length; ++i) {
-				layer[i].draw(context);
+				layer[i].draw(dt, context);
 			}
 		}
 		requestAnimationFrame(animationLoop);

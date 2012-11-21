@@ -21,7 +21,7 @@
 		this.right = right;
 	};
 	
-	Cell.prototype.draw = function(ctx) {
+	Cell.prototype.draw = function(dt, ctx) {
 		var len = cellSize;
 		var halfLen = len / 2;
 		ctx.save();
@@ -95,10 +95,10 @@
 	pc.drawOffsetX = 0;
 	pc.drawOffsetY = 0;
 
-	pc.draw = function(ctx) {
+	pc.draw = function(dt, ctx) {
 		var destX = pc.col * cellSize;
 		var destY = pc.row * cellSize;
-		var delta = MOVE_SPEED * view.dt;
+		var delta = MOVE_SPEED * dt;
 		if (pc.x < destX) {
 			pc.x += delta;
 			if (pc.x > destX - SNAP_DISTANCE) pc.x = destX;

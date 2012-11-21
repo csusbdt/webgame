@@ -6,7 +6,7 @@
 				document.getElementById('content').clientHeight);	
 	
 	var pepperNpc = {
-		draw: function(ctx) {
+		draw: function(dt, ctx) {
 			ctx.drawImage(pepperImage, 100, 100);
 		}
 	};
