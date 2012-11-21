@@ -45,6 +45,10 @@
 			}
 		}
 	};
+	
+	view.removeAllDrawables = function() {
+		drawableLayers.length = 0;
+	};
 
 	//////////////////////////////////////////////////////////////////////////////
 	//

@@ -2,9 +2,9 @@
 
 	input = { };
 
-	input.nullInputHandler = function(e) { };
+	input.nullHandler = function(e) { };
 
-	input.handlerStack = [ input.nullInputHandler ];	
+	input.handlerStack = [ input.nullHandler ];
 
 	document.getElementsByTagName('html')[0].onkeyup = function(e) {
 		if (input.handlerStack.length === 0) return;

@@ -24,9 +24,14 @@
 		document.getElementsByTagName('head')[0].appendChild(script);
 	};
 
-	util.getImage = function(filename) {
+	util.getImage = function(filename, completionCallback) {
 		if (!images.hasOwnProperty(filename)) {
 			images[filename] = new Image();
+			images[filename].onload = function() {
+				if (typeof completionCallback !== 'undefined') {
+					completionCallback();
+				}
+			};
 			images[filename].src = 'images/' + filename;
 		}
 		return images[filename];

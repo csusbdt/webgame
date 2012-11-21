@@ -2,7 +2,8 @@
 
 	var pepperImage = util.getImage('pepper.png');
 	
-	view.resize(window.innerWidth, window.innerHeight);	
+	view.resize(document.getElementById('content').clientWidth, 
+				document.getElementById('content').clientHeight);	
 	
 	var pepperNpc = {
 		draw: function(ctx) {
@@ -17,7 +18,7 @@
 		var y = e.clientY;
 		if (x > 100 && x < 100 + pepperImage.width &&
 			y > 100 && y < 100 + pepperImage.height) {
-				alert('hi');
+				util.exit();
 		}
 	}
 	
