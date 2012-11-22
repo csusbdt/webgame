@@ -35,14 +35,17 @@
 			}, duration);
 		}
 	};
-	
-	view.removeDrawable = function(layerIndex, drawable) {
-		var layer = drawableLayers[layerIndex];
-		for (var i = 0; i < layer.length; ++i) {
-			if (layer[i] === drawable) {
-				layer[i] = layer[layer.length - 1];
-				layer.pop();
-				return;
+
+	// The following code removes all occurrences of the given drawable.
+	view.removeDrawable = function(drawable) {
+		for (var layerIndex = 0; layerIndex < drawableLayers.length; ++layerIndex) {
+			var layer = drawableLayers[layerIndex];
+			for (var i = layer.length - 1; i > 0; --i) {
+				if (layer[i] === drawable) {
+					// Overwrite with the last element and then pop.
+					layer[i] = layer[layer.length - 1];
+					layer.pop();
+				}
 			}
 		}
 	};

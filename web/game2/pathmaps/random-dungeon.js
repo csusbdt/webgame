@@ -62,15 +62,6 @@
 		}
 	};
 	
-	function gameover() {
-		view.removeDrawable(1, pc);
-		input.handlerStack.pop();
-		$('#content').fadeOut(500, function() {
-			view.removeAllDrawables();
-			map.startLoad('pathmaps/gameover');
-		});
-	}
-	
 	view.resize(cols * cellSize, rows * cellSize);
 	
 	// Populate grid with empty cells.
@@ -117,7 +108,10 @@
 			destX === pc.x && 
 			destY === pc.y) {
 			input.handlerStack.pop();
-			if (pc.row >= rows) gameover();
+			if (pc.row >= rows) {
+				input.handlerStack.pop();
+				map.startLoad('pathmaps/gameover');
+			}
 		}
 		ctx.drawImage(pepperImage, pc.x + pc.drawOffsetX, pc.y + pc.drawOffsetY);
 	};

@@ -5,11 +5,14 @@
 	map = { };
 
 	map.startLoad = function(mapName) {
-		util.run(mapName + '.js');
+		$('#content').fadeOut(500, function() {
+			view.removeAllDrawables();
+			util.run(mapName + '.js');
+		});
 	};
 	
-	map.endLoad = function() {
-		//alert('map loaded');
+	map.endLoad = function() {	
+		$('#content').fadeIn(500);
 	};
 	
 })();

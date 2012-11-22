@@ -10,7 +10,9 @@
 	};
 	
 	util.exit = function() {
-		window.location.assign('../index.html');
+		$('#content').fadeOut(500, function() {
+			window.location.assign('../index.html');
+		});
 	};
 
 	util.run = function(filename, callback) {
