@@ -10,7 +10,8 @@
 
 	view = { 
 		width: null,
-		height: null
+		height: null,
+		scale: 1
 	};
 	
 	view.resize = function(width, height) {
@@ -56,7 +57,7 @@
 	view.removeAllDrawables = function() {
 		drawableLayers.length = 0;
 	};
-
+	
 	//////////////////////////////////////////////////////////////////////////////
 	//
 	// Note: Javascript Date object does not give reliable time values, so we
@@ -70,12 +71,14 @@
 		previousTime = currentTime;
 		dt = dt * (1 - WEIGHT) + elapsedTime * WEIGHT;
 		context.clearRect(0, 0, view.width, view.height);
+		context.setTransform(view.scale, 0, 0, view.scale, 0, 0);
 		for (var layerIndex = 0; layerIndex < drawableLayers.length; ++layerIndex) {
 			var layer = drawableLayers[layerIndex];
 			for (var i = 0; i < layer.length; ++i) {
 				layer[i].draw(dt, context);
 			}
 		}
+		context.setTransform(1, 0, 0, 1, 0, 0);
 		requestAnimationFrame(animationLoop);
 	};
 	

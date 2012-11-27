@@ -46,7 +46,7 @@
 		pc.destX = e.pageX - 16;
 	});
 	
-	$(document).keypress(function(e) {
+	$(window).keypress(function(e) {
 		map.startLoad('maps/flex');
 	});
 	

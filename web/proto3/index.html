@@ -8,7 +8,8 @@
     </head>
     
     <body>
-		<canvas id="canvas" style="border: 1px dashed"></canvas>
+		<!--canvas id="canvas" style="border: 1px dashed"></canvas-->
+		<canvas id="canvas""></canvas>
 		
 		<!--
 		Each of the following scripts add an object to the global namespace.
@@ -34,7 +35,7 @@
 
 			// Call map.startLoad to transition to a different map.
 			map.startLoad = function(mapName) {
-				$('#content').fadeOut(500, function() {
+				$('body').fadeOut(500, function() {
 					view.removeAllDrawables();
 					runScript(mapName + '.js', function() {
 						localStorage.setItem('map', mapName);
@@ -44,17 +45,17 @@
 	
 			// Call map.endLoad to when new map is finished loading.
 			map.endLoad = function() {	
-				$('#content').fadeIn(500);
+				$('body').fadeIn(500);
 			};
 			
 			map.exit = function() {
-				$('#content').fadeOut(500, function() {
+				$('body').fadeOut(500, function() {
 					location.assign('../index.html');
 				});
 			};
 	
 			// Start with canvas hidden, so we can fade in.
-			$('#content').hide();
+			$('body').hide();
 
 			(function() {
 				var mapName;
