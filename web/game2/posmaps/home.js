@@ -18,7 +18,8 @@
 	};
 	
 	// Fill entire viewport with canvas.	
-	$('#content').css('width', '100%');
+	$('#content').css('width', '99%');
+	$('#content').css('height', '99%');
 	view.resize($('#content').width(), $('#content').height());
 	onresize = function() {
 		view.resize($('#content').width(), $('#content').height());

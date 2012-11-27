@@ -1,18 +1,8 @@
 # webgame
 
-## Steps for setting up:
+Webgame is a collection of example game maps (levels) that are meant as design examples for games built using HTML5.  This is a recently started work in progress.
 
-1. Go to [the git website](http://git-scm.com/) and install git.
+- [Running instance of webgame examples](http://csusbdt594.appspot.com/)
+- [Project wiki](https://github.com/csusbdt/webgame/wiki)
 
-2. Use the following command to clone the webgame project.
-
-    git clone https://github.com/csusbdt/webgame.git
-
-## To see a running instance of webgame:
-
-- [Webgame](http://csusbdt594.appspot.com/)
-
-## System design
-
-See [the project wiki](https://github.com/csusbdt/webgame/wiki).
 
