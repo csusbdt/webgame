@@ -8,8 +8,8 @@
     </head>
     
     <body>
-		<!--canvas id="canvas" style="border: 1px dashed"></canvas-->
-		<canvas id="canvas""></canvas>
+		<canvas id="canvas" style="border: 1px dashed"></canvas>
+		<!--canvas id="canvas""></canvas-->
 		
 		<!--
 		Each of the following scripts add an object to the global namespace.
@@ -67,7 +67,7 @@
 				if (mapName === null) mapName = localStorage.getItem('map');
 				
 				// If the map is not yet determined, then set a default map.
-				if (mapName === null) mapName = 'maps/home';
+				if (mapName === null) mapName = 'maps/flex';
 				
 				// Run the map script.
 				// The map script can add elements to the map object as needed.
