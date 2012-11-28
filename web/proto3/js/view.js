@@ -30,11 +30,11 @@
 	};
 	
 	view.getX = function(e) {
-		return (e.pageX - canvasMarginLeft) / scale + offsetX;
+		return (e.pageX - canvasMarginLeft - offsetX) / scale;
 	}
 	
 	view.getY = function(e) {
-		return (e.pageY - canvasMarginRight) / scale + offsetY;
+		return (e.pageY - canvasMarginRight - offsetY) / scale;
 	}
 	
 	view.addDrawable = function(drawable, layerIndex, duration) {

@@ -10,6 +10,21 @@
 		MIN_X = (view.DRAW_AREA_WIDTH - view.GAME_PLAY_WIDTH) / 2,
 		MAX_X = view.DRAW_AREA_WIDTH - MIN_X;
 		
+	view.addDrawable(
+		{
+			draw: function(dt, ctx) {
+				ctx.font = 'bold 14px sans-serif';
+				ctx.fillStyle = "#000000";
+				ctx.fillText('This example illustrates how to adapt a gameplay area to different screens.', MIN_X, 150);
+				ctx.fillText('The green rectangle is the background image.', MIN_X, 180);
+				ctx.fillText('The red rectangle is the game play area.', MIN_X, 210);
+				ctx.fillText('The system always keeps the game play area visible.', MIN_X, 240);
+				ctx.fillText('The system tries to render as much of the green area as possible without further reducing the scale.', MIN_X, 270);
+				ctx.fillText('Click on the screen to move the pepper; it will not leave the game play area.', MIN_X, 300);
+			}
+		},
+		1);
+		
 	// Construct a test background object.		
 	(function() {
 		var canvas = document.createElement('canvas');
