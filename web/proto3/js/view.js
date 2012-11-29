@@ -123,7 +123,7 @@
 	};
 
 	adjustCanvas();
-	$(window).resize(adjustCanvas);	
+	$(window).resize(adjustCanvas);
 	requestAnimationFrame(animationLoop);
 
 })();
